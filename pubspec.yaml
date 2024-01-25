@@ -44,6 +44,7 @@ dependencies:
   retrofit_generator: ^4.2.0
   # riverpod: ^2.4.9
   flutter_riverpod: ^2.4.9
+  skeletons: ^0.0.3
 
 dev_dependencies:
   flutter_test:

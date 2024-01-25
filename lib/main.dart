@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_example1/common/component/custom_text_form_field.dart';
 import 'package:riverpod_example1/common/view/splash_screen.dart';
-import 'package:riverpod_example1/user/view/login_screen.dart';
 
 void main() {
   runApp(
