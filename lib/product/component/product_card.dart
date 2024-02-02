@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_example1/common/const/colors.dart';
+import 'package:riverpod_example1/product/model/product_model.dart';
 import 'package:riverpod_example1/restaurant/model/restaurant_detail_model.dart';
 
 class ProductCard extends StatelessWidget {
@@ -16,7 +17,10 @@ class ProductCard extends StatelessWidget {
     required this.price,
   });
 
-  factory ProductCard.fromModel({required RestaurantProductModel model}) {
+  // factory 컨스트럭터를 OOP로 코드 줄여보기
+  factory ProductCard.fromProductModel({
+    required ProductModel model,
+  }) {
     return ProductCard(
       image: Image.network(
         model.imgUrl,
@@ -30,12 +34,21 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-//  Image.asset(
-//     'asset/img/food/ddeok_bok_gi.jpg',
-//     width: 110,
-//     height: 110,
-//     fit: BoxFit.cover,
-//   ),
+  factory ProductCard.fromRestaurantProductModel({
+    required RestaurantProductModel model,
+  }) {
+    return ProductCard(
+      image: Image.network(
+        model.imgUrl,
+        width: 110,
+        height: 110,
+        fit: BoxFit.cover,
+      ),
+      name: model.name,
+      detail: model.detail,
+      price: model.price,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

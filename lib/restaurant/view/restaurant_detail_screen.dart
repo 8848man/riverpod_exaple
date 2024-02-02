@@ -13,7 +13,7 @@ import 'package:riverpod_example1/restaurant/provider/restaurant_rating_provider
 import 'package:riverpod_example1/restaurant/repositroy/restaurant_repository.dart';
 import 'package:skeletons/skeletons.dart';
 
-import '../../product/product_card.dart';
+import '../../product/component/product_card.dart';
 
 class RestaurantDetailScreen extends ConsumerStatefulWidget {
   final String id;
@@ -154,7 +154,7 @@ class _RestaurantDetailScreenState
 
             return Padding(
               padding: const EdgeInsets.only(top: 16.0),
-              child: ProductCard.fromModel(model: model),
+              child: ProductCard.fromRestaurantProductModel(model: model),
             );
           },
           childCount: products.length,
