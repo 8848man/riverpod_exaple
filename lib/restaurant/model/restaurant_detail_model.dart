@@ -1,7 +1,7 @@
+import 'package:riverpod_example1/common/model/model_with_id.dart';
 import 'package:riverpod_example1/common/utils/data_utils.dart';
 import 'package:riverpod_example1/restaurant/model/restaurant_model.dart';
 import 'package:json_annotation/json_annotation.dart';
-
 
 part 'restaurant_detail_model.g.dart';
 // 이 모델은 왜 RestaurantModel을 extends받았나? -> 중복되는 값 작업을 최소화하기 위해
