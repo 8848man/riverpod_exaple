@@ -16,6 +16,8 @@ import 'package:skeletons/skeletons.dart';
 import '../../product/component/product_card.dart';
 
 class RestaurantDetailScreen extends ConsumerStatefulWidget {
+  static String get routeName => 'restaruantDetail';
+
   final String id;
 
   const RestaurantDetailScreen({

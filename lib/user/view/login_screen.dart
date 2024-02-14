@@ -11,6 +11,7 @@ import '../../common/component/custom_text_form_field.dart';
 import '../../common/const/data.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
+  static String get routeName => 'login';
   const LoginScreen({super.key});
 
   @override

@@ -6,6 +6,7 @@ import 'package:riverpod_example1/product/view/product_screen.dart';
 import '../../restaurant/view/restaurant_screen.dart';
 
 class RootTab extends StatefulWidget {
+  static String get routeName => 'home';
   const RootTab({super.key});
 
   @override

@@ -4,6 +4,7 @@ import 'package:riverpod_example1/common/model/pagination_params.dart';
 import 'package:riverpod_example1/common/provider/pagination_provider.dart';
 import 'package:riverpod_example1/restaurant/model/restaurant_model.dart';
 import 'package:riverpod_example1/restaurant/repositroy/restaurant_repository.dart';
+import 'package:collection/collection.dart';
 
 final restaurantDetailProvider =
     Provider.family<RestaurantModel?, String>((ref, id) {
@@ -13,7 +14,7 @@ final restaurantDetailProvider =
     return null;
   }
 
-  return state.data.firstWhere((element) => element.id == id);
+  return state.data.firstWhereOrNull((element) => element.id == id);
 });
 
 final restaurantProvider =
@@ -51,14 +52,27 @@ class RestaurantStateNotifier
 
     final resp = await repository.getRestaurantDetail(id: id);
 
-    // [RestaurantMode(1), RestaurantMode(2), RestaurantMode(3)]이 있을 때
-    // id : 2인 Detail 모델을 가져와라
-    // getDetail(id: 2); 요청을 하면
-    // [RestaurantMode(1), RestaurantDetailMode(2), RestaurantMode(3)] id가 2인 RestaurantModel을 DetailModel로 바꿔준다.
-    state = pState.copyWith(
-      data: pState.data
-          .map<RestaurantModel>((e) => e.id == id ? resp : e)
-          .toList(),
-    );
+    // [RestaurantModel(1), RestaurantModel(2), RestaurantModel(3)]이 있을 때
+    // 데이터가 없을 때에는 그냥 캐시의 끝에다가 데이터를 추가해버린다.
+    // [RestaurantModel(1), RestaurantModel(2), RestaurantModel(3),
+    // RestaurantDetailModel(10)]
+    if (pState.data.where((e) => e.id == id).isEmpty) {
+      state = pState.copyWith(
+        data: <RestaurantModel>[
+          ...pState.data,
+          resp,
+        ],
+      );
+    } else {
+      // [RestaurantModel(1), RestaurantModel(2), RestaurantModel(3)]이 있을 때
+      // id : 2인 Detail 모델을 가져와라
+      // getDetail(id: 2); 요청을 하면
+      // [RestaurantModel(1), RestaurantDetailModel(2), RestaurantModel(3)] id가 2인 RestaurantModel을 DetailModel로 바꿔준다.
+      state = pState.copyWith(
+        data: pState.data
+            .map<RestaurantModel>((e) => e.id == id ? resp : e)
+            .toList(),
+      );
+    }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:riverpod_example1/common/model/model_with_id.dart';
+import 'package:riverpod_example1/common/utils/data_utils.dart';
 import 'package:riverpod_example1/restaurant/model/restaurant_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -12,6 +13,9 @@ class ProductModel implements IModelWithId {
   // 상품 상세정보
   final String detail;
   // 이미지 URL
+  @JsonKey(
+    fromJson: DataUtils.pathToUrl,
+  )
   final String imgUrl;
   // 상품 가격
   final int price;
