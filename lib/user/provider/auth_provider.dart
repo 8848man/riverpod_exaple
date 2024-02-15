@@ -1,11 +1,9 @@
-import 'dart:async';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_example1/common/view/root_tab.dart';
 import 'package:riverpod_example1/common/view/splash_screen.dart';
+import 'package:riverpod_example1/restaurant/view/basket_screen.dart';
 import 'package:riverpod_example1/restaurant/view/restaurant_detail_screen.dart';
 import 'package:riverpod_example1/user/model/user_model.dart';
 import 'package:riverpod_example1/user/provider/user_me_provider.dart';
@@ -51,6 +49,11 @@ class AuthProvider extends ChangeNotifier {
           name: LoginScreen.routeName,
           builder: (_, __) => LoginScreen(),
         ),
+        GoRoute(
+          path: '/basket',
+          name: BasketScreen.routeName,
+          builder: (_, __) => BasketScreen(),
+        ),
       ];
 
   // 순환참조 해결을 위한 로그아웃 분리
@@ -65,10 +68,11 @@ class AuthProvider extends ChangeNotifier {
   // 홈 스크린으로 보내줄지 확인하는 로직이 필요
   String? redirectLogic(BuildContext context, GoRouterState state) {
     final UserModelBase? user = ref.read(userMeProvider);
-
+    print('redirectLogic has called');
     // 고라우터 체크
-    final logginIn = state.location == '/login';
+    final logginIn = state.uri.toString() == '/login';
 
+    print('logginIn is $logginIn, user is $user');
     // 유저 정보가 없는데
     // 로그인중이면 그대로 로그인 페이지에 두고
     // 만약에 로그인중이 아니라면 로그인 페이지로 이동
@@ -83,14 +87,16 @@ class AuthProvider extends ChangeNotifier {
     // 로그인 중이거나 현재 위치가 SplashScreen이면
     // 홈으로 이동
     if (user is UserModel) {
-      return logginIn || state.location == '/splash' ? '/' : null;
+      return logginIn || state.uri.toString() == '/splash' ? '/' : null;
     }
 
     //UserModelError
     if (user is UserModelError) {
+      context.go('/login');
       return !logginIn ? '/login' : null;
     }
 
+    print('test001');
     return null;
   }
 }
